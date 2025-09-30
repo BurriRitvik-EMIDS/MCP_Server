@@ -1,5 +1,15 @@
+# Core dependencies
 fastmcp
 langchain_experimental
 typer
 pyodbc
-uv
+requests
+python-dotenv
+pandas
+matplotlib
+numpy
+# Vector store dependencies
+langchain-community
+langchain-postgres
+sentence-transformers
+psycopg2-binary

@@ -412,10 +412,19 @@ def retrieve_from_vectorstore(query: str, k: int = 4) -> List[Dict[str, Any]]:
         docs = retriever.get_relevant_documents(query)
         results: List[Dict[str, Any]] = []
         for d in docs[: max(1, int(k))]:
+            metadata = {}
+            # Include actual metadata fields from your table
+            for key in ["doc_type", "source", "document_id", "page_number"]:
+                if hasattr(d, key):
+                    metadata[key] = getattr(d, key)
+                elif isinstance(d.metadata, dict) and key in d.metadata:
+                    metadata[key] = d.metadata[key]
+
             results.append({
                 "page_content": getattr(d, "page_content", ""),
-                "metadata": getattr(d, "metadata", {}) or {}
+                "metadata": metadata  # This is now safe and matches your schema
             })
+
         return results
     except Exception as e:
         return [{"error": f"Retrieval failed: {str(e)}"}]
