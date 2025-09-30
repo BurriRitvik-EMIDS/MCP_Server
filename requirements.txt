@@ -1,0 +1,5 @@
+fastmcp
+langchain_experimental
+typer
+pyodbc
+uv
