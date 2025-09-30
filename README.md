@@ -8,13 +8,13 @@ A FastMCP server for healthcare data analysis with member search, claims analysi
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
-python server.py
-python client.py
+python server.py [for running MCP Server]
+python client.py [for testing MCP Server]
 ```
 
 ## Environment Setup
 
-Create a `.env` file for database access:
+Create a `.env` file in the root directory with the following variables:
 
 ```env
 # Required for database access
@@ -23,12 +23,24 @@ SQL_DATABASE_NAME=your-database
 SQL_DB_USERNAME=your-username
 SQL_DB_PASSWORD=your-password
 
+# Required for vector store (PGVector)
+POSTGRES_USER=your_postgres_username
+POSTGRES_PASSWORD=your_postgres_password
+POSTGRES_HOST=your_postgres_host  # e.g., localhost or server-address
+POSTGRES_DB=your_database_name
+
 # Optional: Override default timeout (in seconds)
 MCP_SERVER_REQUEST_TIMEOUT=5
 
 # Optional: SQL Driver version (defaults to "ODBC Driver 18 for SQL Server")
 # SQL_DRIVER=ODBC Driver 18 for SQL Server
 ```
+
+### Notes on Environment Variables
+- The `SQL_*` variables are used for the main application database
+- The `POSTGRES_*` variables are specifically for the vector store functionality
+- Make sure the PostgreSQL server has the `vector` extension installed
+- The database user must have appropriate permissions to create and modify tables
 
 ## Data Sources
 
